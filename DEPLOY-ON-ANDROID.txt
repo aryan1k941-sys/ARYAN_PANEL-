@@ -1,0 +1,92 @@
+ARYAN PANEL — RENDER RUN GUIDE
+===============================
+
+FILES IN THIS ZIP
+-----------------
+index.html                 Customer website
+admin.html                 Admin dashboard
+render.yaml                Render Static Site configuration
+README-RENDER.txt          Firebase setup and security notes
+DEPLOY-ON-ANDROID.txt      This step-by-step guide
+
+IMPORTANT: STATIC WEBSITE — NO START COMMAND
+--------------------------------------------
+This version is a Render Static Site. It does NOT need a Python/Node start command,
+requirements.txt, or a Web Service. Render serves index.html automatically.
+
+DEPLOY FROM YOUR ANDROID PHONE
+------------------------------
+1. Extract this ZIP.
+2. Create a NEW repository on https://github.com/
+3. Upload all five files directly into the repository ROOT:
+   index.html, admin.html, render.yaml, README-RENDER.txt,
+   DEPLOY-ON-ANDROID.txt
+   Do not upload only the ZIP file.
+4. Open https://render.com/ and sign in with GitHub.
+5. Choose New + -> Static Site.
+6. Connect the repository you just created.
+7. Use these settings if asked:
+   Name: aryan-panel-store
+   Branch: main (or the branch you uploaded)
+   Root Directory: blank
+   Build Command: blank
+   Publish Directory: .
+8. Create Static Site / Deploy and wait for status LIVE.
+9. Open:
+   Customer page: https://YOUR-SITE.onrender.com/
+   Admin page: https://YOUR-SITE.onrender.com/admin
+   If /admin does not open, use /admin.html.
+
+FIREBASE SETUP (REQUIRED)
+-------------------------
+Both HTML pages use the same Firebase project: xit-macro-vip.
+
+1. Go to https://console.firebase.google.com/
+2. Open project xit-macro-vip.
+3. Authentication -> Sign-in method -> enable Email/Password.
+4. Authentication -> Users -> create the admin account:
+   Email: xitmacro007@gmail.com
+   Set your own password in Firebase. The password is not inside this ZIP.
+5. Authentication -> Settings -> Authorized domains:
+   Add your Render hostname, e.g. aryan-panel-store.onrender.com.
+6. Make sure Realtime Database is enabled and the database URL in index.html
+   is the active database URL for this Firebase project.
+
+ADMIN LOGIN
+-----------
+The admin page currently allows xitmacro007@gmail.com.
+Sign in using the Firebase password you set. If you use another admin email,
+the allowlist in admin.html must be updated too.
+
+PAYMENTS AND SECURITY — IMPORTANT
+---------------------------------
+The supplied pages use manual UTR submission and admin approval. They do NOT
+include FamGateway automatic payment integration.
+
+Some balance, purchase, coupon, and key operations are performed in browser
+JavaScript. This is not secure for a real-money production store without trusted
+server-side verification and properly designed Firebase Database Security Rules.
+Do not accept real payments or keep valuable balances until those protections
+are implemented and tested. Never put payment gateway secret keys in HTML/GitHub.
+
+TROUBLESHOOTING
+---------------
+Admin login fails:
+- Confirm Email/Password sign-in is enabled.
+- Confirm the admin account exists.
+- Add the Render hostname to Firebase Authorized domains.
+
+Database actions fail:
+- Confirm Realtime Database is enabled.
+- Confirm the database URL in index.html is correct.
+- Check Firebase Database Rules; do not make the database public just to remove errors.
+
+ /admin gives 404:
+- Try /admin.html.
+- Confirm render.yaml is in the repository root.
+
+Changes not visible:
+- Check Render deploy status.
+- Use Manual Deploy -> Deploy latest commit.
+
+Again: there is NO start command for this Static Site version.
